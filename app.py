@@ -84,22 +84,22 @@ def audit():
                 "professional_email_draft": "To: Campus Engineering\nSubject: URGENT: Structural Hazard Detected\n\nAutomated audit has identified a Class-8 structural hazard. Maintenance team must review NBC 2016 Part 6 compliance at the reported coordinates immediately."
             }
         
-        # Inject metadata and user inputs into the response (works for both real and mock)
-        result['image_url'] = f"/static/uploads/{unique_filename}"
-        result['timestamp'] = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
+        # Ensure result is a dict for type safety and metadata injection
+        final_result = dict(result)
+        final_result['image_url'] = f"/static/uploads/{unique_filename}"
+        final_result['timestamp'] = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
         
-        # Retrieve optional user data from form
         user_description = request.form.get('user_description', '').strip()
         if user_description:
-            result['user_description'] = user_description
+            final_result['user_description'] = user_description
             
         lat = request.form.get('latitude')
         lng = request.form.get('longitude')
         if lat and lng:
-            result['latitude'] = lat
-            result['longitude'] = lng
+            final_result['latitude'] = float(lat)
+            final_result['longitude'] = float(lng)
         
-        return jsonify(result)
+        return jsonify(final_result)
             
     except Exception as e:
         import traceback
@@ -108,4 +108,6 @@ def audit():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # For local development
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
