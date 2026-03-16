@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Safe-Scan: Campus Safety Dashboard
 
 **Safe-Scan** is a rapid-response safety dashboard that allows anyone on a university campus to report infrastructure hazards instantly using their phone camera, and automatically generates a professional, code-compliant safety audit.
@@ -35,3 +36,6 @@ We built a "Command Center" web app that turns a normal photo into an official, 
    python app.py
    ```
 4. Open your browser and go to `http://127.0.0.1:5000`
+=======
+# Safe-scan
+>>>>>>> 9af3df73d9662163351253a12a22e62bbdac103d
